@@ -8,42 +8,43 @@
 
 typedef struct
 {
-    char name[MAX_NAME_LEN];        // »óÇ° ÀÌ¸§
-    int stock_income;               // ÃÑ ÀÔ°íµÈ ¼ö·®
-    int stock_sold;                 // ÃÑ ÆÇ¸ÅµÈ ¼ö·®
-    int stock_current;              // ÇöÀç ³²¾ÆÀÖ´Â Àç°í
-    int price;                      // ÆÇ¸Å °¡°İ
-    long long total_revenue;        // ÀÌ »óÇ°À¸·Î ¹ú¾îµéÀÎ ÃÑ ¸ÅÃâ ±İ¾×
+    char name[MAX_NAME_LEN];        // ìƒí’ˆ ì´ë¦„
+    int stock_income;               // ì´ ì…ê³ ëœ ìˆ˜ëŸ‰
+    int stock_sold;                 // ì´ íŒë§¤ëœ ìˆ˜ëŸ‰
+    int stock_current;              // í˜„ì¬ ë‚¨ì•„ìˆëŠ” ì¬ê³ 
+    int price;                      // íŒë§¤ ê°€ê²©
+    long long total_revenue;        // ì´ ìƒí’ˆìœ¼ë¡œ ë²Œì–´ë“¤ì¸ ì´ ë§¤ì¶œ ê¸ˆì•¡
 } Product;
 
-// --- 1. ÇÔ¼ö ¼±¾ğ
+// --- 1. í•¨ìˆ˜ ì„ ì–¸
 void clear_input_buffer();
 void save_data(Product products[], int count);
 void load_data(Product products[], int count);
-void handle_income(Product products[], int count); // 1. ÀÔ°í Ã³¸®
-void handle_sale(Product products[], int count);   // 2. ÆÇ¸Å Ã³¸®
-void handle_individual_info(Product products[], int count); // 3. °³º° »óÇ° Á¤º¸ Á¶È¸/¼öÁ¤
-void handle_overall_status(Product products[], int count);  // 4. ÀüÃ¼ ÇöÈ² Á¶È¸
+void handle_income(Product products[], int count); // 1. ì…ê³  ì²˜ë¦¬
+void handle_sale(Product products[], int count);   // 2. íŒë§¤ ì²˜ë¦¬
+void handle_individual_info(Product products[], int count); // 3. ê°œë³„ ìƒí’ˆ ì •ë³´ ì¡°íšŒ/ìˆ˜ì •
+void handle_overall_status(Product products[], int count);  // 4. ì „ì²´ í˜„í™© ì¡°íšŒ
 
-// --- 2. ¸ŞÀÎ ÇÔ¼ö
-int main() {
+// --- 2. ë©”ì¸ í•¨ìˆ˜
+int main() 
+{
     int menu;
     Product products[MAX_PRODUCTS + 1] = { 0 };
 
     for (int i = 1; i <= MAX_PRODUCTS; i++)
     {
-        strcpy(products[i].name, "(¹ÌÀÔ·Â)");
+        strcpy(products[i].name, "(ë¯¸ì…ë ¥)");
     }
 
-    printf("? ¼îÇÎ¸ô Àç°í °ü¸® ÇÁ·Î±×·¥ ½ÃÀÛ ?\n");
+    printf("? ì‡¼í•‘ëª° ì¬ê³  ê´€ë¦¬ í”„ë¡œê·¸ë¨ ì‹œì‘ ?\n");
 
     while (1)
     {
-        printf("\n1. ÀÔ°í\n2. ÆÇ¸Å\n3. °³º°»óÇ°Á¤º¸\n4. ÀüÃ¼ÇöÈ²\n5. »óÇ°ÀúÀå\n6. »óÇ°ºÒ·¯¿À±â\n7. Á¾·á\n¼±ÅÃ: ");
+        printf("\n1. ì…ê³ \n2. íŒë§¤\n3. ê°œë³„ìƒí’ˆì •ë³´\n4. ì „ì²´í˜„í™©\n5. ìƒí’ˆì €ì¥\n6. ìƒí’ˆë¶ˆëŸ¬ì˜¤ê¸°\n7. ì¢…ë£Œ\nì„ íƒ: ");
 
         if (scanf("%d", &menu) != 1)
         {
-            printf("¼ıÀÚ·Î¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+            printf("ìˆ«ìë¡œë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
             clear_input_buffer();
             continue;
         }
@@ -57,13 +58,13 @@ int main() {
         case 4: handle_overall_status(products, MAX_PRODUCTS); break;
         case 5: save_data(products, MAX_PRODUCTS); break;
         case 6: load_data(products, MAX_PRODUCTS); break;
-        case 7: printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n"); return 0;
-        default: printf("1ºÎÅÍ 7 Áß ÇÏ³ª¸¦ ¼±ÅÃÇÏ¼¼¿ä.\n"); break;
+        case 7: printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n"); return 0;
+        default: printf("1ë¶€í„° 7 ì¤‘ í•˜ë‚˜ë¥¼ ì„ íƒí•˜ì„¸ìš”.\n"); break;
         }
     }
 }
 
-// --- 3. »ó¼¼ ±â´É ±¸Çö ÇÔ¼ö ---
+// --- 3. ìƒì„¸ ê¸°ëŠ¥ êµ¬í˜„ í•¨ìˆ˜ ---
 
 void clear_input_buffer()
 {
@@ -71,159 +72,159 @@ void clear_input_buffer()
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-// (1) ÀÔ°í Ã³¸® ÇÔ¼ö
+// (1) ì…ê³  ì²˜ë¦¬ í•¨ìˆ˜
 void handle_income(Product products[], int count)
 {
     int id, quantity, price;
-    printf("\n<< 1. ÀÔ°í >>\n»óÇ° ID (1~%d): ", count);
+    printf("\n<< 1. ì…ê³  >>\nìƒí’ˆ ID (1~%d): ", count);
     if (scanf("%d", &id) != 1 || id < 1 || id > count)
     {
-        printf("Àß¸øµÈ »óÇ° ¹øÈ£ÀÔ´Ï´Ù.\n"); clear_input_buffer(); return;
+        printf("ì˜ëª»ëœ ìƒí’ˆ ë²ˆí˜¸ì…ë‹ˆë‹¤.\n"); clear_input_buffer(); return;
     }
     clear_input_buffer();
 
-    // »óÇ°¸íÀÌ ¾øÀ¸¸é »õ·Î ÀÔ·Â
-    if (strcmp(products[id].name, "(¹ÌÀÔ·Â)") == 0)
+    // ìƒí’ˆëª…ì´ ì—†ìœ¼ë©´ ìƒˆë¡œ ì…ë ¥
+    if (strcmp(products[id].name, "(ë¯¸ì…ë ¥)") == 0)
     {
-        printf("»óÇ°¸í ÀÔ·Â: ");
+        printf("ìƒí’ˆëª… ì…ë ¥: ");
         if (fgets(products[id].name, MAX_NAME_LEN, stdin) != NULL)
             products[id].name[strcspn(products[id].name, "\n")] = 0;
     }
     else
     {
-        printf("»óÇ°¸í: %s\n", products[id].name);
+        printf("ìƒí’ˆëª…: %s\n", products[id].name);
     }
 
-    // ÀÔ°í ¼ö·® ¹× °¡°İÀ» ÀÔ·Â¹Ş°í À¯È¿¼º °Ë»ç
-    printf("ÀÔ°í ¼ö·®: ");
+    // ì…ê³  ìˆ˜ëŸ‰ ë° ê°€ê²©ì„ ì…ë ¥ë°›ê³  ìœ íš¨ì„± ê²€ì‚¬
+    printf("ì…ê³  ìˆ˜ëŸ‰: ");
     if (scanf("%d", &quantity) != 1 || quantity <= 0)
     {
-        printf("¼ö·®Àº 1°³ ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.\n"); clear_input_buffer(); return;
+        printf("ìˆ˜ëŸ‰ì€ 1ê°œ ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.\n"); clear_input_buffer(); return;
     }
-    printf("ÆÇ¸Å °¡°İ: ");
+    printf("íŒë§¤ ê°€ê²©: ");
     if (scanf("%d", &price) != 1 || price < 0)
     {
-        printf("°¡°İÀº 0¿ø ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.\n"); clear_input_buffer(); return;
+        printf("ê°€ê²©ì€ 0ì› ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.\n"); clear_input_buffer(); return;
     }
     clear_input_buffer();
 
-    // Á¤º¸ ¾÷µ¥ÀÌÆ®
+    // ì •ë³´ ì—…ë°ì´íŠ¸
     products[id].stock_income += quantity;
     products[id].stock_current += quantity;
     products[id].price = price;
-    printf("ID %d (%s)¿¡ %d°³ ÀÔ°í ¿Ï·á. ÇöÀç Àç°í: %d\n", id, products[id].name, quantity, products[id].stock_current);
+    printf("ID %d (%s)ì— %dê°œ ì…ê³  ì™„ë£Œ. í˜„ì¬ ì¬ê³ : %d\n", id, products[id].name, quantity, products[id].stock_current);
 }
 
-// (2) ÆÇ¸Å Ã³¸® ÇÔ¼ö
+// (2) íŒë§¤ ì²˜ë¦¬ í•¨ìˆ˜
 void handle_sale(Product products[], int count)
 {
     int id, quantity;
-    printf("\n<< 2. ÆÇ¸Å >>\n»óÇ° ID (1~%d): ", count);
+    printf("\n<< 2. íŒë§¤ >>\nìƒí’ˆ ID (1~%d): ", count);
     if (scanf("%d", &id) != 1 || id < 1 || id > count)
     {
-        printf("Àß¸øµÈ »óÇ° ¹øÈ£ÀÔ´Ï´Ù.\n"); clear_input_buffer(); return;
+        printf("ì˜ëª»ëœ ìƒí’ˆ ë²ˆí˜¸ì…ë‹ˆë‹¤.\n"); clear_input_buffer(); return;
     }
     clear_input_buffer();
 
-    if (strcmp(products[id].name, "(¹ÌÀÔ·Â)") == 0)
+    if (strcmp(products[id].name, "(ë¯¸ì…ë ¥)") == 0)
     {
-        printf("»óÇ°ÀÌ µî·ÏµÇÁö ¾Ê¾Ò½À´Ï´Ù.\n"); return;
+        printf("ìƒí’ˆì´ ë“±ë¡ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n"); return;
     }
 
-    printf("»óÇ°¸í: %s, ÇöÀç Àç°í: %d\nÆÇ¸Å ¼ö·®: ", products[id].name, products[id].stock_current);
+    printf("ìƒí’ˆëª…: %s, í˜„ì¬ ì¬ê³ : %d\níŒë§¤ ìˆ˜ëŸ‰: ", products[id].name, products[id].stock_current);
     if (scanf("%d", &quantity) != 1 || quantity <= 0)
     {
-        printf("¼ö·®Àº 1°³ ÀÌ»óÀÌ¾î¾ß ÇÕ´Ï´Ù.\n"); clear_input_buffer(); return;
+        printf("ìˆ˜ëŸ‰ì€ 1ê°œ ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤.\n"); clear_input_buffer(); return;
     }
     clear_input_buffer();
 
-    // Àç°í ¹× °¡°İ È®ÀÎ
+    // ì¬ê³  ë° ê°€ê²© í™•ì¸
     if (quantity > products[id].stock_current)
     {
-        printf("Àç°í ºÎÁ·! ÇöÀç Àç°í: %d°³\n", products[id].stock_current); return;
+        printf("ì¬ê³  ë¶€ì¡±! í˜„ì¬ ì¬ê³ : %dê°œ\n", products[id].stock_current); return;
     }
     if (products[id].price == 0)
     {
-        printf("ÆÇ¸Å °¡°İÀÌ 0¿øÀÔ´Ï´Ù.\n"); return;
+        printf("íŒë§¤ ê°€ê²©ì´ 0ì›ì…ë‹ˆë‹¤.\n"); return;
     }
 
-    // Á¤º¸ ¾÷µ¥ÀÌÆ®
+    // ì •ë³´ ì—…ë°ì´íŠ¸
     products[id].stock_sold += quantity;
     products[id].stock_current -= quantity;
     products[id].total_revenue += (long long)quantity * products[id].price;
 
-    printf("ID %d (%s) %d°³ ÆÇ¸Å ¿Ï·á. ÆÇ¸Å ±İ¾×: %lld¿ø\n", id, products[id].name, quantity, (long long)quantity * products[id].price);
-    if (products[id].stock_current == 0) printf("Àç°í ¼ÒÁø ¾Ë¸².\n");
+    printf("ID %d (%s) %dê°œ íŒë§¤ ì™„ë£Œ. íŒë§¤ ê¸ˆì•¡: %lldì›\n", id, products[id].name, quantity, (long long)quantity * products[id].price);
+    if (products[id].stock_current == 0) printf("ì¬ê³  ì†Œì§„ ì•Œë¦¼.\n");
 }
 
-// (3) °³º° »óÇ° Á¤º¸ Á¶È¸/¼öÁ¤ ÇÔ¼ö
+// (3) ê°œë³„ ìƒí’ˆ ì •ë³´ ì¡°íšŒ/ìˆ˜ì • í•¨ìˆ˜
 void handle_individual_info(Product products[], int count)
 {
     int id, sub_menu;
-    printf("\n<< 3. °³º°»óÇ°Á¤º¸ >>\n1. »óÇ°¸í ¼öÁ¤\n2. ÇöÈ² Á¶È¸\n¼±ÅÃ: ");
+    printf("\n<< 3. ê°œë³„ìƒí’ˆì •ë³´ >>\n1. ìƒí’ˆëª… ìˆ˜ì •\n2. í˜„í™© ì¡°íšŒ\nì„ íƒ: ");
     if (scanf("%d", &sub_menu) != 1)
     {
-        printf("¼±ÅÃ ¿À·ù.\n"); clear_input_buffer(); return;
+        printf("ì„ íƒ ì˜¤ë¥˜.\n"); clear_input_buffer(); return;
     }
 
-    printf("»óÇ° ID (1~%d): ", count);
+    printf("ìƒí’ˆ ID (1~%d): ", count);
     if (scanf("%d", &id) != 1 || id < 1 || id > count)
     {
-        printf("Àß¸øµÈ ID.\n"); clear_input_buffer(); return;
+        printf("ì˜ëª»ëœ ID.\n"); clear_input_buffer(); return;
     }
-    clear_input_buffer(); // <--- ID ÀÔ·Â ÈÄ ¹öÆÛ ºñ¿ì±â Ãß°¡
+    clear_input_buffer(); // <--- ID ì…ë ¥ í›„ ë²„í¼ ë¹„ìš°ê¸° ì¶”ê°€
 
     if (sub_menu == 1)
-    { // »óÇ°¸í ¼öÁ¤
-        printf("»õ »óÇ°¸í ÀÔ·Â (ÇöÀç: %s): ", products[id].name);
+    { // ìƒí’ˆëª… ìˆ˜ì •
+        printf("ìƒˆ ìƒí’ˆëª… ì…ë ¥ (í˜„ì¬: %s): ", products[id].name);
         if (fgets(products[id].name, MAX_NAME_LEN, stdin) != NULL)
             products[id].name[strcspn(products[id].name, "\n")] = 0;
-        printf("»óÇ°¸íÀÌ '%s'·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù.\n", products[id].name);
+        printf("ìƒí’ˆëª…ì´ '%s'ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.\n", products[id].name);
     }
     else if (sub_menu == 2)
-    { // ÇöÈ² Á¶È¸
-        if (strcmp(products[id].name, "(¹ÌÀÔ·Â)") == 0)
+    { // í˜„í™© ì¡°íšŒ
+        if (strcmp(products[id].name, "(ë¯¸ì…ë ¥)") == 0)
         {
-            printf("»óÇ°ÀÌ ¹Ìµî·ÏÀÔ´Ï´Ù.\n"); return;
+            printf("ìƒí’ˆì´ ë¯¸ë“±ë¡ì…ë‹ˆë‹¤.\n"); return;
         }
-        printf("\n--- ID %d (%s) ÇöÈ² ---\n", id, products[id].name);
-        printf("ÆÇ¸Å °¡°İ\t: %d¿ø\nÀÔ°í ¼ö·®\t: %d°³\nÆÇ¸Å ¼ö·®\t: %d°³\nÇöÀç Àç°í\t: %d°³\nÃÑ ÆÇ¸Å ±İ¾×\t: %lld¿ø\n",
+        printf("\n--- ID %d (%s) í˜„í™© ---\n", id, products[id].name);
+        printf("íŒë§¤ ê°€ê²©\t: %dì›\nì…ê³  ìˆ˜ëŸ‰\t: %dê°œ\níŒë§¤ ìˆ˜ëŸ‰\t: %dê°œ\ní˜„ì¬ ì¬ê³ \t: %dê°œ\nì´ íŒë§¤ ê¸ˆì•¡\t: %lldì›\n",
             products[id].price, products[id].stock_income, products[id].stock_sold,
             products[id].stock_current, products[id].total_revenue);
     }
     else
     {
-        printf(" Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù.\n");
+        printf(" ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤.\n");
     }
 }
 
-// (4) ÀüÃ¼ ÇöÈ² Á¶È¸ ÇÔ¼ö
+// (4) ì „ì²´ í˜„í™© ì¡°íšŒ í•¨ìˆ˜
 void handle_overall_status(Product products[], int count)
 {
-    printf("\n<< 4. ÀüÃ¼ »óÇ° ÇöÈ² >>\n");
-    printf("ID | »óÇ°¸í | Àç°í | ÀÔ°í | ÆÇ¸Å | °¡°İ | ÃÑ¸ÅÃâ\n");
+    printf("\n<< 4. ì „ì²´ ìƒí’ˆ í˜„í™© >>\n");
+    printf("ID | ìƒí’ˆëª… | ì¬ê³  | ì…ê³  | íŒë§¤ | ê°€ê²© | ì´ë§¤ì¶œ\n");
     printf("----------------------------------------------------------\n");
 
     long long overall_revenue = 0;
     int total_sold = 0, total_income = 0;
-    int max_id = 0, min_id = 0; // ÃÖ´Ù/ÃÖ¼Ò ÆÇ¸Å »óÇ° ID
+    int max_id = 0, min_id = 0; // ìµœë‹¤/ìµœì†Œ íŒë§¤ ìƒí’ˆ ID
 
     for (int i = 1; i <= count; i++)
     {
-        // ¹Ìµî·Ï »óÇ°Àº °Ç³Ê¶Ü
-        if (strcmp(products[i].name, "(¹ÌÀÔ·Â)") == 0) continue;
+        // ë¯¸ë“±ë¡ ìƒí’ˆì€ ê±´ë„ˆëœ€
+        if (strcmp(products[i].name, "(ë¯¸ì…ë ¥)") == 0) continue;
 
-        // Å×ÀÌºí Ãâ·Â
+        // í…Œì´ë¸” ì¶œë ¥
         printf("%-3d| %-7s | %-4d | %-4d | %-4d | %-5d | %-10lld\n",
             i, products[i].name, products[i].stock_current, products[i].stock_income,
             products[i].stock_sold, products[i].price, products[i].total_revenue);
 
-        // ÀüÃ¼ ÇÕ°è °è»ê
+        // ì „ì²´ í•©ê³„ ê³„ì‚°
         overall_revenue += products[i].total_revenue;
         total_sold += products[i].stock_sold;
         total_income += products[i].stock_income;
 
-        // ÃÖ´Ù/ÃÖ¼Ò ÆÇ¸Å »óÇ° Ã£±â (Ã¹ ¹øÂ° µî·Ï »óÇ°À» ÃÊ±â°ªÀ¸·Î ¼³Á¤)
+        // ìµœë‹¤/ìµœì†Œ íŒë§¤ ìƒí’ˆ ì°¾ê¸° (ì²« ë²ˆì§¸ ë“±ë¡ ìƒí’ˆì„ ì´ˆê¸°ê°’ìœ¼ë¡œ ì„¤ì •)
         if (max_id == 0)
         {
             max_id = min_id = i;
@@ -236,66 +237,67 @@ void handle_overall_status(Product products[], int count)
     }
 
     printf("----------------------------------------------------------\n");
-    printf("ÃÑ ÀÔ°í: %d, ÃÑ ÆÇ¸Å: %d\n", total_income, total_sold);
-    printf("ÃÑ ÆÇ¸ÅÀ²: %.2f%%\n", total_income > 0 ? (double)total_sold / total_income * 100 : 0.0);
-    printf("ÃÑ ÆÇ¸Å ±İ¾×: %lld ¿ø\n", overall_revenue);
+    printf("ì´ ì…ê³ : %d, ì´ íŒë§¤: %d\n", total_income, total_sold);
+    printf("ì´ íŒë§¤ìœ¨: %.2f%%\n", total_income > 0 ? (double)total_sold / total_income * 100 : 0.0);
+    printf("ì´ íŒë§¤ ê¸ˆì•¡: %lld ì›\n", overall_revenue);
 
-    // ÆÇ¸Å·® ¼øÀ§ ¹× Àç°í ºÎÁ· ¾Ë¸²
+    // íŒë§¤ëŸ‰ ìˆœìœ„ ë° ì¬ê³  ë¶€ì¡± ì•Œë¦¼
     if (max_id != 0)
     {
-        printf("ÃÖ´Ù ÆÇ¸Å: ID %d (%s), %d°³\n", max_id, products[max_id].name, products[max_id].stock_sold);
-        printf("ÃÖ¼Ò ÆÇ¸Å: ID %d (%s), %d°³\n", min_id, products[min_id].name, products[min_id].stock_sold);
+        printf("ìµœë‹¤ íŒë§¤: ID %d (%s), %dê°œ\n", max_id, products[max_id].name, products[max_id].stock_sold);
+        printf("ìµœì†Œ íŒë§¤: ID %d (%s), %dê°œ\n", min_id, products[min_id].name, products[min_id].stock_sold);
     }
     for (int i = 1; i <= count; i++)
     {
-        if (products[i].stock_current <= 2 && strcmp(products[i].name, "(¹ÌÀÔ·Â)") != 0)
-            printf("Àç°í ºÎÁ·: ID %d (%s), Àç°í: %d°³\n", i, products[i].name, products[i].stock_current);
+        if (products[i].stock_current <= 2 && strcmp(products[i].name, "(ë¯¸ì…ë ¥)") != 0)
+            printf("ì¬ê³  ë¶€ì¡±: ID %d (%s), ì¬ê³ : %dê°œ\n", i, products[i].name, products[i].stock_current);
     }
 }
 
-// (5) »óÇ° ÀúÀå ÇÔ¼ö (¹ÙÀÌ³Ê¸® ÆÄÀÏ¿¡ ÀúÀå)
+// (5) ìƒí’ˆ ì €ì¥ í•¨ìˆ˜ (ë°”ì´ë„ˆë¦¬ íŒŒì¼ì— ì €ì¥)
 void save_data(Product products[], int count)
 {
     FILE* fp = fopen(DATA_FILE, "wb");
     if (fp == NULL)
     {
-        perror("? ÆÄÀÏ ÀúÀå ½ÇÆĞ"); return;
+        perror("? íŒŒì¼ ì €ì¥ ì‹¤íŒ¨"); return;
     }
 
-    // products[1] À§Ä¡ºÎÅÍ count °³¼öÀÇ Product ±¸Á¶Ã¼ ÀüÃ¼¸¦ ÆÄÀÏ¿¡ ÀúÀå
+    // products[1] ìœ„ì¹˜ë¶€í„° count ê°œìˆ˜ì˜ Product êµ¬ì¡°ì²´ ì „ì²´ë¥¼ íŒŒì¼ì— ì €ì¥
     size_t written = fwrite(&products[1], sizeof(Product), count, fp);
 
     if (written == (size_t)count)
     {
-        printf("»óÇ° Á¤º¸ %d°³°¡ '%s' ÆÄÀÏ¿¡ ¼º°øÀûÀ¸·Î ÀúÀåµÇ¾ú½À´Ï´Ù.\n", count, DATA_FILE);
+        printf("ìƒí’ˆ ì •ë³´ %dê°œê°€ '%s' íŒŒì¼ì— ì„±ê³µì ìœ¼ë¡œ ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.\n", count, DATA_FILE);
     }
     else
     {
-        printf("ÀúÀå Áß ¿À·ù ¹ß»ı.\n");
+        printf("ì €ì¥ ì¤‘ ì˜¤ë¥˜ ë°œìƒ.\n");
     }
     fclose(fp);
 }
 
-// (6) »óÇ° ºÒ·¯¿À±â ÇÔ¼ö (¹ÙÀÌ³Ê¸® ÆÄÀÏ¿¡¼­ ÀĞ±â)
+// (6) ìƒí’ˆ ë¶ˆëŸ¬ì˜¤ê¸° í•¨ìˆ˜ (ë°”ì´ë„ˆë¦¬ íŒŒì¼ì—ì„œ ì½ê¸°)
 void load_data(Product products[], int count)
 {
     FILE* fp = fopen(DATA_FILE, "rb");
     if (fp == NULL)
     {
-        perror("ÆÄÀÏ ºÒ·¯¿À±â ½ÇÆĞ (ÀúÀåµÈ ÆÄÀÏÀÌ ¾øÀ½)");
+        perror("íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨ (ì €ì¥ëœ íŒŒì¼ì´ ì—†ìŒ)");
         return;
     }
 
-    // ÆÄÀÏ¿¡¼­ count °³¼öÀÇ Product ±¸Á¶Ã¼ µ¥ÀÌÅÍ¸¦ products[1] À§Ä¡ºÎÅÍ ÀĞ¾î¿È
+    // íŒŒì¼ì—ì„œ count ê°œìˆ˜ì˜ Product êµ¬ì¡°ì²´ ë°ì´í„°ë¥¼ products[1] ìœ„ì¹˜ë¶€í„° ì½ì–´ì˜´
     size_t read = fread(&products[1], sizeof(Product), count, fp);
 
     if (read == (size_t)count)
     {
-        printf("»óÇ° Á¤º¸ %d°³¸¦ '%s' ÆÄÀÏ¿¡¼­ ¼º°øÀûÀ¸·Î ºÒ·¯¿Ô½À´Ï´Ù.\n", count, DATA_FILE);
+        printf("ìƒí’ˆ ì •ë³´ %dê°œë¥¼ '%s' íŒŒì¼ì—ì„œ ì„±ê³µì ìœ¼ë¡œ ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤.\n", count, DATA_FILE);
     }
     else
     {
-        printf("ÆÄÀÏ ³»¿ë ¿À·ù. ÀÏºÎ µ¥ÀÌÅÍ¸¸ ºÒ·¯¿Ô½À´Ï´Ù.\n");
+        printf("íŒŒì¼ ë‚´ìš© ì˜¤ë¥˜. ì¼ë¶€ ë°ì´í„°ë§Œ ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤.\n");
     }
     fclose(fp);
+
 }
