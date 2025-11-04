@@ -65,7 +65,6 @@ int main()
 }
 
 // --- 3. 상세 기능 구현 함수 ---
-
 void clear_input_buffer()
 {
     int c;
