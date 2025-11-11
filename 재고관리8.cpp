@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define INITIAL_CAPACITY 5 // 프로그램 시작 시 초기 용량
+#define INITIAL_CAPACITY 5 
 #define MAX_NAME_LEN 50
 #define DATA_FILE "products.dat"
 
@@ -19,7 +19,7 @@ typedef struct
 void clear_input_buffer();
 void save_data(Product products[], int count);
 void load_data(Product** products_ptr, int* max_products_ptr);
-void handle_resize(Product** products_ptr, int* max_products_ptr); // 목록 확장 함수
+void handle_resize(Product** products_ptr, int* max_products_ptr);
 void handle_income(Product products[], int count); // 1. 입고 처리
 void handle_sale(Product products[], int count);   // 2. 판매 처리
 void handle_individual_info(Product products[], int count); // 3. 개별 상품 정보 조회/수정
@@ -44,11 +44,10 @@ int main()
         strcpy(products[i].name, "(미입력)");
     }
 
-    printf("? 쇼핑몰 재고 관리 프로그램 시작 ?\n");
+    printf(" 쇼핑몰 재고 관리 프로그램 시작 \n");
 
     while (1)
     {
-        // 메뉴에 8. 상품 목록 확장 추가
         printf("\n1. 입고\n2. 판매\n3. 개별상품정보\n4. 전체현황\n5. 상품저장\n6. 상품불러오기\n7. 종료\n8. 상품 목록 확장\n선택: ");
 
         if (scanf("%d", &menu) != 1)
@@ -67,12 +66,13 @@ int main()
         case 4: handle_overall_status(products, max_products); break;
         case 5: save_data(products, max_products); break;
         case 6: load_data(&products, &max_products); break;
-        case 7: // (7)종료
+        // (7) 프로그램 종료
+        case 7:
             printf("프로그램을 종료합니다.\n");
-            free(products); // --- 동적 할당된 메모리 해제 ---
+            free(products);
             return 0;
-        case 8: handle_resize(&products, &max_products); break; // 8번 메뉴 처리
-        default: printf("1부터 8 중 하나를 선택하세요.\n"); break; // 범위 변경
+        case 8: handle_resize(&products, &max_products); break;
+        default: printf("1부터 8 중 하나를 선택하세요.\n"); break; 
         }
     }
 }
@@ -160,7 +160,8 @@ void handle_sale(Product products[], int count)
     products[id].total_revenue += (long long)quantity * products[id].price;
 
     printf("ID %d (%s) %d개 판매 완료. 판매 금액: %lld원\n", id, products[id].name, quantity, (long long)quantity * products[id].price);
-    if (products[id].stock_current == 0) printf("재고 소진 알림.\n");
+    if (products[id].stock_current == 0) 
+        printf("재고 소진 알림.\n");
 }
 
 // (3) 개별 상품 정보 조회/수정 함수
@@ -198,6 +199,7 @@ void handle_individual_info(Product products[], int count)
             products[id].price, products[id].stock_income, products[id].stock_sold,
             products[id].stock_current, products[id].total_revenue);
     }
+        
     else
     {
         printf(" 잘못된 선택입니다.\n");
@@ -360,14 +362,12 @@ void handle_resize(Product** products_ptr, int* max_products_ptr)
         return;
     }
 
-    // 새로 할당된 영역(old_capacity + 1 부터)을 초기화
     for (int i = old_capacity + 1; i <= new_capacity; i++)
     {
         memset(&new_products[i], 0, sizeof(Product)); 
         strcpy(new_products[i].name, "(미입력)");
     }
 
-    // main의 포인터와 변수 값을 업데이트
     *products_ptr = new_products;
     *max_products_ptr = new_capacity;
 
