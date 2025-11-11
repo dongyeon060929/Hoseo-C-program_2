@@ -372,5 +372,4 @@ void handle_resize(Product** products_ptr, int* max_products_ptr)
     *max_products_ptr = new_capacity;
 
     printf("상품 목록 용량이 %d에서 %d로 성공적으로 확장되었습니다.\n", old_capacity, new_capacity);
-
 }
